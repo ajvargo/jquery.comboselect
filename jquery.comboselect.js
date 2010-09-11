@@ -34,7 +34,6 @@
 (function($){
 	jQuery.fn.comboselect = function(settings){
 		settings = jQuery.extend({
-			sort: 'both',		// which sides to sort: none, left, right, or both
 			addbtn: ' &gt; ',	// text of the "add" button
 			rembtn: ' &lt; '	// text of the "remove" button
 		}, settings);
@@ -59,10 +58,6 @@
 			// var opts = $(this).children().clone();
 			var opts = $(this).find('option').clone();
 			
-			// add an ID to each option for the sorting plugin
-			opts.each(function(){
-				$(this).attr('id', $(this).attr('value'));
-			});
 			// build the combo box
 			combo += '<fieldset class="comboselect">';
 			combo += '<select id="' + leftID + '" name="' + leftID + '" class="csleft" multiple="multiple">';
@@ -117,7 +112,6 @@
 			var leftOpts = $(this).parent().parent().find('select.csleft option:selected');
 			var right = $(this).parent().parent().find('select.csright');
 			right.append(leftOpts);
-			sortBoxes(left.attr('id'), right.attr('id'));	
 		});
 	
 		$('input.csremove').click(function(){
@@ -125,32 +119,7 @@
 			var right = $(this).parent().parent().find('select.csright');
 			var rightOpts = $(this).parent().parent().find('select.csright option:selected');
 			left.append(rightOpts);
-			sortBoxes(left.attr('id'), right.attr('id'));
 		});			
-
-		// sort the boxes and clear highlighted items
-		function sortBoxes(leftID, rightID){
-			var toSort = null;
-			
-			switch(settings.sort){
-				case 'none': toSort = null;
-				case 'left': toSort = $('#' + leftID); break;
-				case 'right': toSort = $('#' + rightID); break;
-				default: toSort = $('#' + leftID + ', #' + rightID);					
-			}
-		
-			if(settings.sort != 'none'){
-				toSort.find('option').selso({
-					type: 'alpha', 
-					extract: function(o){ return $(o).text(); } 
-				});
-			}
-			
-			// clear highlights
-			try {
-			  $('#' + leftID + ', #' + rightID).find('option:selected').removeAttr('selected');
-	    } catch (e) { }
-		}			
 		
 		// add any items that were already selected
 		$('input.csadd').click();
