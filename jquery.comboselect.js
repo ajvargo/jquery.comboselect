@@ -56,16 +56,16 @@
 			var unSelectedOptions = $this.find('option:not(:selected)').clone();
 
 			// build the combo box
-			combo += '<fieldset class="comboselect">';
+			combo += '<div class="comboselect">';
 			combo += '<select id="' + leftID + '" name="' + leftID + '" class="csleft" multiple="multiple">';
 			combo += '</select>';
-			combo += '<fieldset>';
+			combo += '<div class="cs-buttons">';
 			combo += '<input type="button" class="csadd" id="' + selectID + '_add" value="' + settings.addbtn + '" />';
 			combo += '<input type="button" class="csremove" id="' + selectID + '_remove" value="' + settings.rembtn + '" />';
-			combo += '</fieldset>';
+			combo += '</div>';
 			combo += '<select id="' + rightID + '" name="' + rightID + '" class="csright" multiple="multiple">';
 			combo += '</select>';
-			combo += '</fieldset>';		
+			combo += '</div>';		
 		
 			// hide the original element and 
 			// add the combo box after it
