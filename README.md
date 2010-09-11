@@ -8,10 +8,8 @@ The plugin transforms a multi-select from a single element to side by side multi
 
 Usage
 -----
+Shown with default options as options
 `$(#my_multi_select_box).comboselect({
-        [options]
+		addbtn: ' &gt; ',   // label for the "add" button
+    rembtn: ' &lt; '    // label for the "remove" button
 });
-
-
-### Options
-Stay tuned.
