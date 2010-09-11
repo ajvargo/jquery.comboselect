@@ -39,6 +39,7 @@
 		}, settings);
 	
 		this.each(function(){
+      $this = $(this);
 			// the id of the original element
 			var selectID = this.id;
 			
@@ -48,15 +49,12 @@
 			var rightID = selectID + '_right';
 			
 			// the form which contains the original element
-			var theForm = $(this).parents('form');
+			var theForm = $this.parents('form');
 			
 			// place to store markup for the combo box
 			var combo = '';
 			
 			// copy of the options from the original element
-			
-			// var opts = $(this).children().clone();
-			var opts = $(this).find('option').clone();
 			
 			// build the combo box
 			combo += '<fieldset class="comboselect">';
@@ -72,7 +70,7 @@
 		
 			// hide the original element and 
 			// add the combo box after it
-			$(this).hide().after(combo);			
+			$this.hide().after(combo);			
 
 			// find the combo box in the DOM and append
 			// a copy of the options from the original
