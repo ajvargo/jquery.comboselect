@@ -48,14 +48,13 @@
 			var leftID = selectID + '_left';
 			var rightID = selectID + '_right';
 			
-			// the form which contains the original element
-			var theForm = $this.parents('form');
-			
 			// place to store markup for the combo box
 			var combo = '';
 			
-			// copy of the options from the original element
-			
+			// copy of selected and not selected  options from original select
+			var selectedOptions = $this.find('option:selected').clone();
+			var unSelectedOptions = $this.find('option:not(:selected)').clone();
+
 			// build the combo box
 			combo += '<fieldset class="comboselect">';
 			combo += '<select id="' + leftID + '" name="' + leftID + '" class="csleft" multiple="multiple">';
@@ -73,26 +72,12 @@
 			$this.hide().after(combo);			
 
 			// find the combo box in the DOM and append
-			// a copy of the options from the original
+			// a copy of the unselected options
 			// element to the left side
-			theForm.find('#' + leftID).append(opts);
-			
-			// bind a submit event to the enclosing form
-			theForm.submit(function(){
-				// clear the original form element of selected options
-				$('#' + selectID).find('option:selected').removeAttr('selected');	
-			
-				// look at each option element
-				// from the right side...
-				$('#' + rightID).find('option').each(function(){
-					// select the corresponding option
-					// from the original element
-					var v = $(this).attr('value');
-					$('#' + selectID).find('option[value="' + v + '"]').attr('selected','selected');
-				});
-				
-				return true;
-			});			
+			$('#' + leftID).append(unSelectedOptions);
+
+      // and selected on the right
+			$('#' + rightID).append(selectedOptions);
 		});
 
 		// double-click moves an item to the other list
@@ -119,9 +104,6 @@
 			left.append(rightOpts);
 		});			
 		
-		// add any items that were already selected
-		$('input.csadd').click();
-	
 		return this;
 	};	
 })(jQuery);
