@@ -12,8 +12,11 @@ Usage
 -----
 Shown with default options as options
 `$(#my_multi_select_box).comboselect({
+    addremall : true,  // include the add/remove all buttons
+		add_allbtn: ' &gt;&gt; ',   // label for the "add all" button
+    rem_allbtn: ' &lt;&lt; ',    // label for the "remove all" button
 		addbtn: ' &gt; ',   // label for the "add" button
-    rembtn: ' &lt; '    // label for the "remove" button
+    rembtn: ' &lt; ',    // label for the "remove" button
     cs_container: 'div', //  html tag to contain both comboselects
-    bt_container: 'div' // html tag to contain the comboselect buttons
+    btn_container: 'div' // html tag to contain the comboselect buttons
 });

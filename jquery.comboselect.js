@@ -1,9 +1,3 @@
-// Add all button
-// remove all button
-// legacy option to preserve backwardness (so far fieldset)
-// id for entire combo option
-
-
 // jQuery comboselect plugin
 //
 // version 2.0.0
@@ -39,10 +33,13 @@
 (function($){
 	jQuery.fn.comboselect = function(settings){
 		settings = jQuery.extend({
+      addremall : true,  // include the add/remove all buttons
+		  add_allbtn: ' &gt;&gt; ',   // label for the "add all" button
+      rem_allbtn: ' &lt;&lt; ',    // label for the "remove all" button
 			addbtn: ' &gt; ',	// text of the "add" button
 			rembtn: ' &lt; ',	// text of the "remove" button
       cs_container: 'div', //  html tag to contain both comboselects
-      bt_container: 'div' // html tag to contain the comboselect buttons
+      btn_container: 'div' // html tag to contain the comboselect buttons
 		}, settings);
 
 		this.each(function(){
@@ -69,10 +66,14 @@
 			combo += '<' + settings.cs_container + ' class="comboselect">';
 			combo += '<select id="' + leftID + '" name="' + leftID + '" class="csleft" multiple="multiple">';
 			combo += '</select>';
-			combo += '<' + settings.bs_container + ' class="cs-buttons">';
+			combo += '<' + settings.btn_container + ' class="cs-buttons">';
 			combo += '<input type="button" class="csadd" id="' + addID + '" value="' + settings.addbtn + '" />';
+      if(settings.addremall){
+        combo += '<input type="button" class="csadd" id="' + addID + '_all" value="' + settings.add_allbtn + '" />';
+        combo += '<input type="button" class="csremove" id="' + removeID + '_all" value="' + settings.rem_allbtn + '" />';
+      }
 			combo += '<input type="button" class="csremove" id="' + removeID + '" value="' + settings.rembtn + '" />';
-			combo += '</' + settings.bs_container + '>';
+			combo += '</' + settings.btn_container + '>';
 			combo += '<select id="' + rightID + '" name="' + rightID + '" class="csright" multiple="multiple">';
 			combo += '</select>';
 			combo += '</' + settings.cs_container + '>';
@@ -102,6 +103,16 @@
         removeSelections(leftSelect, rightSelect, originalSelect);
       });
 
+      // bind add and remove all buttons
+      // bind add and remove buttons
+      $("#" + addID + "_all").click(function(){
+        addAllSelections(leftSelect, rightSelect, originalSelect);
+      });
+
+      $("#" + removeID + "_all").click(function(){
+        removeAllSelections(leftSelect, rightSelect, originalSelect);
+      });
+
       // bind double clicking options
       $("#" + leftID).dblclick(function(){
         addSelections(leftSelect, rightSelect, originalSelect);
@@ -128,6 +139,17 @@
         original.find('option[value="' + $(this).val() + '"]').removeAttr('selected');
       });
     }
+
+    function addAllSelections(left, right, original){
+      right.append(left.find('option'));
+      original.find('option').attr('selected','selected');
+    }
+
+    function removeAllSelections(left, right, original){
+      left.append(right.find('option'));
+      original.find('option').removeAttr('selected');
+    }
+
 		return this;
 	};
 })(jQuery);
