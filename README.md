@@ -6,10 +6,14 @@ What's it do?
 -------------
 The plugin transforms a multi-select from a single element to side by side multi-selects. You can move selections from one select to another instead of highlighting them in single.  Look at the example. This will make a lot more sense, I assure you.
 
+As part of the transformation, your select is hidden, but updated as you double-click or select and press the add/remove buttons.
+
 Usage
 -----
 Shown with default options as options
 `$(#my_multi_select_box).comboselect({
 		addbtn: ' &gt; ',   // label for the "add" button
     rembtn: ' &lt; '    // label for the "remove" button
+    cs_container: 'div', //  html tag to contain both comboselects
+    bt_container: 'div' // html tag to contain the comboselect buttons
 });

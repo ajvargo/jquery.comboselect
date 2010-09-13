@@ -1,3 +1,9 @@
+// Add all button
+// remove all button
+// legacy option to preserve backwardness (so far fieldset)
+// id for entire combo option
+
+
 // jQuery comboselect plugin
 //
 // version 2.0.0
@@ -30,12 +36,13 @@
 // 1.0.1	Correctly transforms inputs which already had options selected.
 // 1.0.0	Initial release.
 
-
 (function($){
 	jQuery.fn.comboselect = function(settings){
 		settings = jQuery.extend({
 			addbtn: ' &gt; ',	// text of the "add" button
-			rembtn: ' &lt; '	// text of the "remove" button
+			rembtn: ' &lt; ',	// text of the "remove" button
+      cs_container: 'div', //  html tag to contain both comboselects
+      bt_container: 'div' // html tag to contain the comboselect buttons
 		}, settings);
 
 		this.each(function(){
@@ -59,16 +66,16 @@
 			var unSelectedOptions = $this.find('option:not(:selected)').clone();
 
 			// build the combo box
-			combo += '<div class="comboselect">';
+			combo += '<' + settings.cs_container + ' class="comboselect">';
 			combo += '<select id="' + leftID + '" name="' + leftID + '" class="csleft" multiple="multiple">';
 			combo += '</select>';
-			combo += '<div class="cs-buttons">';
+			combo += '<' + settings.bs_container + ' class="cs-buttons">';
 			combo += '<input type="button" class="csadd" id="' + addID + '" value="' + settings.addbtn + '" />';
 			combo += '<input type="button" class="csremove" id="' + removeID + '" value="' + settings.rembtn + '" />';
-			combo += '</div>';
+			combo += '</' + settings.bs_container + '>';
 			combo += '<select id="' + rightID + '" name="' + rightID + '" class="csright" multiple="multiple">';
 			combo += '</select>';
-			combo += '</div>';
+			combo += '</' + settings.cs_container + '>';
 
 			// hide the original element and
 			// add the combo box after it
