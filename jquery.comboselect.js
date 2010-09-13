@@ -40,7 +40,7 @@
 			rembtn: ' &lt; ',	// text of the "remove" button
       cs_container: 'div', //  html tag to contain both comboselects
       btn_container: 'div' // html tag to contain the comboselect buttons
-		}, settings);
+		}, jQuery.fn.comboselect.defaults, settings);
 
 		this.each(function(){
       $this = $(this);

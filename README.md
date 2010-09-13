@@ -19,4 +19,16 @@ Shown with default options as options
     rembtn: ' &lt; ',    // label for the "remove" button
     cs_container: 'div', //  html tag to contain both comboselects
     btn_container: 'div' // html tag to contain the comboselect buttons
-});
+});`
+
+
+To set for legeacy compatibility, define the following after you include the plugin, but before you 'wire' it to anyting:
+`jQuery.fn.comboselect.defaults = {
+    addremall : false,
+		addbtn: ' &gt; ',
+    rembtn: ' &lt; ',
+    cs_container: 'fieldset',
+    btn_container: 'fieldset'
+};`
+
+This method can be used for any defaults you prefer, so you do not have to set options on each use of the comboselect.
