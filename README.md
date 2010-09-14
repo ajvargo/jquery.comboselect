@@ -41,15 +41,17 @@ This method can be used for any defaults you prefer, so you do not have to set o
 Version History
 ---------------
 2.0.0 Reworking release, no sorting
- * Removed selso dependency
- * Added ability to set global options
- * Added add/remove all button and text options
- * Changed fieldsets to divs for select and button containers
- * Added option to specify container element for generated selects
- * Added option to specify container element for generated buttons
+* Removed selso dependency
+* Added ability to set global options
+* Added add/remove all button and text options
+* Changed fieldsets to divs for select and button containers
+* Added option to specify container element for generated selects
+* Added option to specify container element for generated buttons
 
 1.0.2 Now works correctly if the form is not the immediate parent of the select.
- * Clears originally selected options before updating with user's new selections on submit.
- * Correctly transforms selects whose options were added dynamically.
+* Clears originally selected options before updating with user's new selections on submit.
+* Correctly transforms selects whose options were added dynamically.
+
 1.0.1 Correctly transforms inputs which already had options selected.
+
 1.0.0 Initial release.
