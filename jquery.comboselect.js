@@ -18,12 +18,39 @@
 //
 //
 // Usage: $('#myselect').comboselect({
+//            sort: 'both',  // sort which sides? 'none'|'left'|'right'|'both'
+//            addremall : true,  // include the add/remove all buttons
+//            add_allbtn: ' &gt;&gt; ',   // label for the "add all" button
+//            rem_allbtn: ' &lt;&lt; ',    // label for the "remove all" button
+//            addbtn: ' &gt; ',// text of the "add" button
+//            rembtn: ' &lt; ',// text of the "remove" button
+//            cs_container: 'div', //  html tag to contain both comboselects
+//            btn_container: 'div' // html tag to contain the comboselect buttons
 //            addbtn: [string,default:' &gt; '], // label for the "add" button
 //            rembtn: [string,default:' &lt; ']// label for the "remove" button
 //            });
+// To set for legeacy compatibility, define the following after you include the plugin, but before you 'wire' it to anything:
+
+//     jQuery.fn.comboselect.defaults = {
+//         sort: 'both',
+//         addremall : false,
+// 		    addbtn: ' &gt; ',
+//         rembtn: ' &lt; ',
+//         cs_container: 'fieldset',
+//         btn_container: 'fieldset'
+//     };
+// This method can be used for any defaults you prefer, so you do not have to set options on each use of the comboselect.
+//
 //
 // Version History
 // 2.0.0 Reworking release, no sorting
+//       * Removed selso dependency
+//       * Added ability to set global options
+//       * Added add/remove all button and text options
+//       * Changed fieldsets to divs for select and button containers
+//       * Added option to specify container element for generated selects
+//       * Added option to specify container element for generated buttons
+//
 // 1.0.2 Now works correctly if the form is not the immediate parent of the select.
 //       Clears originally selected options before updating with user's new selections on submit.
 //       Correctly transforms selects whose options were added dynamically.
@@ -33,6 +60,7 @@
 (function($){
   jQuery.fn.comboselect = function(settings){
     settings = jQuery.extend({
+      sort: 'both',  // sort which sides? 'none'|'left'|'right'|'both'
       addremall : true,  // include the add/remove all buttons
       add_allbtn: ' &gt;&gt; ',   // label for the "add all" button
       rem_allbtn: ' &lt;&lt; ',    // label for the "remove all" button
@@ -97,29 +125,34 @@
       // bind add and remove buttons
       $("#" + addID).click(function(){
         addSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
       $("#" + removeID).click(function(){
         removeSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
       // bind add and remove all buttons
-      // bind add and remove buttons
       $("#" + addID + "_all").click(function(){
         addAllSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
       $("#" + removeID + "_all").click(function(){
         removeAllSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
       // bind double clicking options
       $("#" + leftID).dblclick(function(){
         addSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
       $("#" + rightID).dblclick(function(){
         removeSelections(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect);
       });
       
     });
@@ -148,6 +181,30 @@
     function removeAllSelections(left, right, original){
       left.append(right.find('option'));
       original.find('option').removeAttr('selected');
+    }
+    
+    function sortSelects(left, right, original){
+      var order = jQuery.map(original.find('option'), function(option){
+        var $option = $(option);
+        return $option.attr("value") + $option.text() 
+      });
+      
+      if(settings.sort == 'both' || settings.sort == 'right'){
+        sortSelect(right, order);
+      }
+      if(settings.sort == 'both' || settings.sort == 'left'){
+        sortSelect(left, order);
+      }
+    }
+
+    function sortSelect(sortable, order){
+      var sorted = sortable.find('option').sort(function(a,b){
+        var $a = $(a); var $b = $(b);
+        cA = jQuery.inArray($a.attr("value") + $a.text(), order);
+        cB = jQuery.inArray($b.attr("value") + $b.text(), order);
+        return (cA < cB) ? -1 : (cA > cB) ? 1 : 0; 
+      });
+      sortable.append(sorted);
     }
     
     return this;

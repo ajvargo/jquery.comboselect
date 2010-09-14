@@ -13,6 +13,7 @@ Usage
 Shown with default options as options
 
     $(#my_multi_select_box).comboselect({
+        sort: 'both',  // sort which sides? 'none'|'left'|'right'|'both'  -> based on original select's order
         addremall : true,  // include the add/remove all buttons
 		    add_allbtn: ' &gt;&gt; ',   // label for the "add all" button
         rem_allbtn: ' &lt;&lt; ',    // label for the "remove all" button
@@ -24,9 +25,10 @@ Shown with default options as options
 
 
 
-To set for legeacy compatibility, define the following after you include the plugin, but before you 'wire' it to anyting:
+To set for legeacy compatibility, define the following after you include the plugin, but before you 'wire' it to anything:
 
     jQuery.fn.comboselect.defaults = {
+        sort: 'both',
         addremall : false,
 		    addbtn: ' &gt; ',
         rembtn: ' &lt; ',
@@ -34,5 +36,20 @@ To set for legeacy compatibility, define the following after you include the plu
         btn_container: 'fieldset'
     };
 
-
 This method can be used for any defaults you prefer, so you do not have to set options on each use of the comboselect.
+
+Version History
+---------------
+2.0.0 Reworking release, no sorting
+ * Removed selso dependency
+ * Added ability to set global options
+ * Added add/remove all button and text options
+ * Changed fieldsets to divs for select and button containers
+ * Added option to specify container element for generated selects
+ * Added option to specify container element for generated buttons
+
+1.0.2 Now works correctly if the form is not the immediate parent of the select.
+ * Clears originally selected options before updating with user's new selections on submit.
+ * Correctly transforms selects whose options were added dynamically.
+1.0.1 Correctly transforms inputs which already had options selected.
+1.0.0 Initial release.
