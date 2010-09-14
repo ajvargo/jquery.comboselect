@@ -125,34 +125,34 @@
       // bind add and remove buttons
       $("#" + addID).click(function(){
         addSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect, 'right');
       });
       
       $("#" + removeID).click(function(){
         removeSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect, 'left');
       });
       
       // bind add and remove all buttons
       $("#" + addID + "_all").click(function(){
         addAllSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect, 'right');
       });
       
       $("#" + removeID + "_all").click(function(){
         removeAllSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect,'left');
       });
       
       // bind double clicking options
       $("#" + leftID).dblclick(function(){
         addSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect,'right');
       });
       
       $("#" + rightID).dblclick(function(){
         removeSelections(leftSelect, rightSelect, originalSelect);
-        sortSelects(leftSelect, rightSelect, originalSelect);
+        sortSelects(leftSelect, rightSelect, originalSelect,'left');
       });
       
     });
@@ -183,16 +183,16 @@
       original.find('option').removeAttr('selected');
     }
     
-    function sortSelects(left, right, original){
+    function sortSelects(left, right, original, side){
       var order = jQuery.map(original.find('option'), function(option){
         var $option = $(option);
         return $option.attr("value") + $option.text() 
       });
       
-      if(settings.sort == 'both' || settings.sort == 'right'){
+      if((settings.sort == 'both' || settings.sort == 'right') && side == 'right' ){
         sortSelect(right, order);
       }
-      if(settings.sort == 'both' || settings.sort == 'left'){
+      if((settings.sort == 'both' || settings.sort == 'left') && side == 'left' ){
         sortSelect(left, order);
       }
     }
